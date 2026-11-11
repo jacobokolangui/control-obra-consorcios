@@ -706,8 +706,8 @@ function PantallaCronograma({etapa:e,perfil:t}){
     vista==="calendario"?(()=>{
       let anio=mesActual.getFullYear(),mes=mesActual.getMonth(),primero=new Date(anio,mes,1),ultimo=new Date(anio,mes+1,0),
       inicioGrilla=new Date(primero);inicioGrilla.setDate(primero.getDate()-((primero.getDay()+6)%7));
-      let dias=[];for(let d=new Date(inicioGrilla);dias.length<42;d.setDate(d.getDate()+1))dias.push(new Date(d));
-      let itemsDelDia=d=>{let s=d.toISOString().slice(0,10);return ordenados.filter(it=>it.fecha_inicio<=s&&(it.fecha_fin||it.fecha_inicio)>=s)};
+      let dias=[];for(let fch=new Date(inicioGrilla);dias.length<42;fch.setDate(fch.getDate()+1))dias.push(new Date(fch));
+      let itemsDelDia=dia=>{let s=dia.toISOString().slice(0,10);return ordenados.filter(it=>it.fecha_inicio<=s&&(it.fecha_fin||it.fecha_inicio)>=s)};
       return(0,d.jsxs)(d.Fragment,{children:[
         (0,d.jsxs)("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:12},children:[
           (0,d.jsx)("button",{className:"btn ghost",style:{padding:"6px 10px"},onClick:()=>setMesActual(new Date(anio,mes-1,1)),children:"←"}),
@@ -716,8 +716,8 @@ function PantallaCronograma({etapa:e,perfil:t}){
         ]}),
         (0,d.jsx)("div",{className:"card",style:{padding:10,overflowX:"auto"},children:(0,d.jsxs)("div",{style:{minWidth:620},children:[
           (0,d.jsx)("div",{style:{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4,marginBottom:4},children:["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].map(dn=>(0,d.jsx)("div",{style:{fontSize:10.5,fontWeight:700,color:"var(--ink-3)",textAlign:"center",padding:4},children:dn},dn))}),
-          (0,d.jsx)("div",{style:{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4},children:dias.map((d,idx)=>{let enMes=d.getMonth()===mes,lista=itemsDelDia(d);return(0,d.jsxs)("div",{style:{minHeight:76,border:"1px solid var(--line-2)",borderRadius:6,padding:4,background:enMes?"#fff":"var(--paper)",opacity:enMes?1:.5},children:[
-            (0,d.jsx)("div",{className:"mono",style:{fontSize:10,color:"var(--ink-3)",marginBottom:3},children:d.getDate()}),
+          (0,d.jsx)("div",{style:{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4},children:dias.map((dia,idx)=>{let enMes=dia.getMonth()===mes,lista=itemsDelDia(dia);return(0,d.jsxs)("div",{style:{minHeight:76,border:"1px solid var(--line-2)",borderRadius:6,padding:4,background:enMes?"#fff":"var(--paper)",opacity:enMes?1:.5},children:[
+            (0,d.jsx)("div",{className:"mono",style:{fontSize:10,color:"var(--ink-3)",marginBottom:3},children:dia.getDate()}),
             lista.slice(0,3).map(it=>(0,d.jsx)("div",{onClick:()=>!ro&&setEditando(it),style:{fontSize:9.5,background:"var(--mat)",color:"#fff",borderRadius:4,padding:"2px 4px",marginBottom:2,cursor:ro?"default":"pointer",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"},children:it.titulo},it.id)),
             lista.length>3&&(0,d.jsxs)("div",{style:{fontSize:9,color:"var(--ink-3)"},children:["+",lista.length-3," más"]})
           ]},idx)})})
