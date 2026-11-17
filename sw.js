@@ -1,4 +1,4 @@
-const CACHE = "control-obra-v3";
+const CACHE = "control-obra-v4";
 const SHELL = ["./", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (e) => {
@@ -19,8 +19,10 @@ self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (url.origin !== location.origin) return;
   if (e.request.method !== "GET") return;
+  // Pages always skip the browser's HTTP cache so a new deploy shows up on the next reload.
+  const esPagina = e.request.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname.endsWith("/");
   e.respondWith(
-    fetch(e.request)
+    fetch(e.request, esPagina ? { cache: "no-store" } : undefined)
       .then((res) => {
         if (res && res.status === 200) {
           const copy = res.clone();
