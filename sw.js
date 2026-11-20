@@ -1,5 +1,5 @@
-const CACHE = "control-obra-v4";
-const SHELL = ["./", "./manifest.json", "./icon-192.png", "./icon-512.png"];
+const CACHE = "control-obra-v5";
+const SHELL = ["./", "./manifest.json?v=2", "./icon-192.png?v=2", "./icon-512.png?v=2"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)));
